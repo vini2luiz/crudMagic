@@ -7,15 +7,23 @@ const personagemService = new PersonagemService();
 export class PersonagemController {
     static criarPersonagem(req: Request, res: Response) {
         try {
-            const { nome, nomeAventureiro, classe, level, forcaBase, defesaBase } = req.body;
-            const personagem = personagemService.criarPersonagem(
-                nome, nomeAventureiro, classe, level, forcaBase, defesaBase
-            );
-            return res.status(201).json(personagem);
+            const dados = req.body;
+    
+            if (Array.isArray(dados)) {
+                const personagens = dados.map(({ nome, nomeAventureiro, classe, level, forcaBase, defesaBase }) =>
+                    personagemService.criarPersonagem(nome, nomeAventureiro, classe, level, forcaBase, defesaBase)
+                );
+                return res.status(201).json(personagens);
+            } else {
+                const { nome, nomeAventureiro, classe, level, forcaBase, defesaBase } = dados;
+                const personagem = personagemService.criarPersonagem(nome, nomeAventureiro, classe, level, forcaBase, defesaBase);
+                return res.status(201).json(personagem);
+            }
         } catch (err: any) {
             return res.status(400).json({ error: err.message });
         }
     }
+    
 
     static listarPersonagens(req: Request, res: Response) {
         return res.json(personagemService.listarPersonagens());

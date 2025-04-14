@@ -6,13 +6,23 @@ const itemMagicoService = new ItemMagicoService();
 export class ItemMagicoController {
   static criarItem(req: Request, res: Response) {
     try {
-      const { nome, tipo, forca, defesa } = req.body;
-      const item = itemMagicoService.criarItem(nome, tipo, forca, defesa);
-      return res.status(201).json(item);
+        const dados = req.body;
+
+        if (Array.isArray(dados)) {
+            const itens = dados.map(({ nome, tipo, forca, defesa }) =>
+                itemMagicoService.criarItem(nome, tipo, forca, defesa)
+            );
+            return res.status(201).json(itens);
+        } else {
+            const { nome, tipo, forca, defesa } = dados;
+            const item = itemMagicoService.criarItem(nome, tipo, forca, defesa);
+            return res.status(201).json(item);
+        }
     } catch (err: any) {
-      return res.status(400).json({ error: err.message });
+        return res.status(400).json({ error: err.message });
     }
-  }
+}
+
 
   static listarItens(req: Request, res: Response) {
     return res.json(itemMagicoService.listarItens());

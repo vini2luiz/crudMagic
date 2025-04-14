@@ -1,3 +1,4 @@
+
 # Sistema de Gerenciamento para Jogo de RPG
 
 Este é um sistema CRUD desenvolvido em TypeScript para gerenciamento de um jogo de RPG.
@@ -48,39 +49,84 @@ O servidor estará rodando em `http://localhost:3000` por padrão.
 
 ### Criar Personagem
 - Método: POST
-- URL: `http://localhost:3000/characters`
+- URL: `http://localhost:3000/api/personagens`
 - Body (JSON):
 ```json
 {
-  "name": "Nome do Personagem",
-  "class": "Classe do Personagem",
-  "level": 1
+  "nome": "Nome do Jogador",
+  "nomeAventureiro": "Nome do Personagem",
+  "classe": "GUERREIRO", // Pode ser: GUERREIRO, MAGO, ARQUEIRO
+  "level": 1,
+  "forcaBase": 6,
+  "defesaBase": 4
 }
 ```
+Observação: A soma de `forcaBase` e `defesaBase` deve ser igual a 10.
 
 ### Listar Personagens
 - Método: GET
-- URL: `http://localhost:3000/characters`
+- URL: `http://localhost:3000/api/personagens`
 
 ### Buscar Personagem por ID
 - Método: GET
-- URL: `http://localhost:3000/characters/:id`
+- URL: `http://localhost:3000/api/personagens/:id`
 
-### Atualizar Personagem
-- Método: PUT
-- URL: `http://localhost:3000/characters/:id`
+### Atualizar Nome do Aventureiro
+- Método: PATCH
+- URL: `http://localhost:3000/api/personagens/:id/aventureiro`
 - Body (JSON):
 ```json
 {
-  "name": "Novo Nome",
-  "class": "Nova Classe",
-  "level": 2
+  "nomeAventureiro": "Novo Nome do Personagem"
 }
 ```
 
 ### Deletar Personagem
 - Método: DELETE
-- URL: `http://localhost:3000/characters/:id`
+- URL: `http://localhost:3000/api/personagens/:id`
+
+### Adicionar Item a um Personagem
+- Método: POST
+- URL: `http://localhost:3000/api/personagens/:id/itens`
+- Body (JSON):
+```json
+{
+  "itemId": 1
+}
+```
+
+### Listar Itens de um Personagem
+- Método: GET
+- URL: `http://localhost:3000/api/personagens/:id/itens`
+
+### Remover Item de um Personagem
+- Método: DELETE
+- URL: `http://localhost:3000/api/personagens/:id/itens/:itemId`
+
+### Buscar Amuleto de um Personagem
+- Método: GET
+- URL: `http://localhost:3000/api/personagens/:id/itens/amulet`
+
+### Criar Item Mágico
+- Método: POST
+- URL: `http://localhost:3000/api/itens`
+- Body (JSON):
+```json
+{
+  "nome": "Espada Flamejante",
+  "tipo": "Arma", // Pode ser: Arma, Armadura, Amuleto
+  "forca": 5,
+  "defesa": 0
+}
+```
+
+### Listar Itens Mágicos
+- Método: GET
+- URL: `http://localhost:3000/api/itens`
+
+### Buscar Item Mágico por ID
+- Método: GET
+- URL: `http://localhost:3000/api/itens/:id`
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -91,4 +137,4 @@ O servidor estará rodando em `http://localhost:3000` por padrão.
 
 ## 📝 Licença
 
-Este projeto está sob a licença MIT. 
+Este projeto está sob a licença MIT.
